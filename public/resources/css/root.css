@@ -1,0 +1,44 @@
+/* Font families */
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/Variable_wght.woff2") format("woff2");
+    font-weight: 100 900;
+}
+
+@font-face {
+    font-family: "Expletus Sans";
+    src: url("../fonts/ExpletusSans/Variable_wght.woff2") format("woff2");
+    font-weight: 400 700;
+}
+
+:root {
+    --ff-inter: "Inter", sans-serif;
+    --ff-expletus: "Expletus Sans", sans-serif;
+
+    --fs-mega: 6rem,
+    --fs-1000: clamp(2.61rem, calc(2.5rem + 0.55vw), 3rem);
+    --fs-900: clamp(2.18rem, calc(2.09rem + 0.46vw), 2.5rem);
+    --fs-800: clamp(1.81rem, calc(1.74rem + 0.38vw), 2.125rem);
+    --fs-700: clamp(1.51rem, calc(1.45rem + 0.32vw), 1.75rem);
+    --fs-600: clamp(1.26rem, calc(1.21rem + 0.27vw), 1.5rem);
+    --fs-500: clamp(1.05rem, calc(1.01rem + 0.22vw), 1.25rem);
+    --fs-400: clamp(0.88rem, calc(0.84rem + 0.19vw), 1rem);
+    --fs-300: clamp(0.73rem, calc(0.7rem + 0.15vw), 0.875rem);
+    --fs-200: clamp(0.61rem, calc(0.58rem + 0.13vw), 0.75rem);
+
+    --fw-100: 100;
+    --fw-200: 200;
+    --fw-300: 300;
+    --fw-400: 400;
+    --fw-500: 500;
+    --fw-600: 600;
+    --fw-700: 700;
+    --fw-800: 800;
+    --fw-900: 900;
+}
+
+body {
+    font-family: var(--ff-expletus);
+    font-size: var(--fw-400);
+    font-weight: var(--fw-400);
+}
