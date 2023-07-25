@@ -1,7 +1,7 @@
 const board = document.querySelector(".sudoku-board");
 const rows = document.querySelectorAll(".sudoku-board .row");
 const cells = document.querySelectorAll(".sudoku-board .cell");
-
+const cellInputs = document.querySelectorAll(".sudoku-board input");
 cells.forEach((cell, key) => {
   const aciveCellIndex = key % rows.length;
   const activeRowCells = cell.parentElement.children;
@@ -14,12 +14,12 @@ cells.forEach((cell, key) => {
         crossCells.classList.add("active-low");
     }
   }
-
   cell.addEventListener("click", () => {
     cells.forEach((activeCell) => {
       activeCell.classList.remove("active");
       activeCell.classList.remove("active-low");
     });
+    cellInputs.forEach((cellInput) => cellInput.classList.remove("active-low"));
     cell.classList.toggle("active");
     addActiveLowClass(activeRowCells);
     addActiveLowClass(rows);

@@ -35,6 +35,11 @@
     --fw-700: 700;
     --fw-800: 800;
     --fw-900: 900;
+
+    --clr-primary:hsl(261, 40%, 39%);
+    --clr-lightest:hsl(0,0%,100%);
+    --clr-light:hsl(0, 0%, 93%);
+    --clr-dark:hsl(0, 0%, 10%);
 }
 
 body {
