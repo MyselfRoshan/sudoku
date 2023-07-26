@@ -37,8 +37,11 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     ports:
         - '9906:3306'
+    volumes:
+      - sudoku-data:/var/lib/mysql/
   
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
         - '8080:80'
@@ -47,3 +50,5 @@ services:
       - PMA_HOST=${PMA_HOST}
     depends_on:
         - mysql
+volumes:
+  sudoku-data:
