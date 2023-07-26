@@ -1,27 +1,38 @@
-const board = document.querySelector(".sudoku-board");
-const rows = document.querySelectorAll(".sudoku-board .row");
-const cells = document.querySelectorAll(".sudoku-board .cell");
+const btnShowSolution = document.querySelector("#show-solution");
 const cellInputs = document.querySelectorAll(".sudoku-board input");
-cells.forEach((cell, key) => {
-  const aciveCellIndex = key % rows.length;
-  const activeRowCells = cell.parentElement.children;
-
-  function addActiveLowClass(array) {
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
-      const crossCells = element.children[aciveCellIndex] ?? element;
-      if (!crossCells.getAttribute("class").includes("active"))
-        crossCells.classList.add("active-low");
-    }
-  }
-  cell.addEventListener("click", () => {
-    cells.forEach((activeCell) => {
-      activeCell.classList.remove("active");
-      activeCell.classList.remove("active-low");
+const emptyCellInputs = document.querySelectorAll(
+  ".sudoku-board .cell-input-empty"
+);
+emptyCellInputs.forEach((emptyCellInput) => {
+  emptyCellInput.addEventListener("click", () => {
+    cellInputs.forEach((prevActiveCellInput) => {
+      prevActiveCellInput.classList.remove("active");
+      prevActiveCellInput.classList.remove("active-cross");
     });
-    cellInputs.forEach((cellInput) => cellInput.classList.remove("active-low"));
-    cell.classList.toggle("active");
-    addActiveLowClass(activeRowCells);
-    addActiveLowClass(rows);
+    const activeRow = emptyCellInput.getAttribute("data-row");
+    const activeCol = emptyCellInput.getAttribute("data-col");
+    cellInputs.forEach((activeCrossInput) => {
+      activeCrossInput.getAttribute("data-row") === activeRow ||
+      activeCrossInput.getAttribute("data-col") === activeCol
+        ? activeCrossInput.classList.toggle("active-cross")
+        : null;
+    });
+    emptyCellInput.classList.toggle("active");
   });
+});
+
+function onlyNumber(e) {
+  let ASCIICode = e.which ?? e.keyCode;
+  // Only number from 1 - 9 is allowed
+  if (ASCIICode < 49 || ASCIICode > 58) return false;
+  return true;
+}
+btnShowSolution.addEventListener("click", () => {
+  let xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "board", true);
+  xmlhttp.send();
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+    }
+  };
 });

@@ -7,16 +7,16 @@
 ##################################
 */
 .page-not-found {
-position: relative;
+  position: relative;
 
-> a{
-  font-size: var(--fs-500);
-  color: var(--clr-light);
-  position: absolute;
-  top: 5%;
-  left:3%;
-  z-index: 1;
-}
+  > a {
+    font-size: var(--fs-500);
+    color: var(--clr-light);
+    position: absolute;
+    top: 5%;
+    left: 3%;
+    z-index: 1;
+  }
 }
 .page-not-found-img {
   /* height: 100dvh; */
@@ -127,8 +127,8 @@ position: relative;
 */
 
 .sudoku-board-wrapper {
-  --large-border: 4px solid var(--clr-dark);
-  --small-border: 2px solid var(--clr-dark);
+  --large-border: 4px solid var(--clr-primary-dark);
+  --small-border: 2px solid var(--clr-primary-dark);
   height: 100%;
   display: grid;
   place-items: center;
@@ -143,16 +143,32 @@ position: relative;
     height: var(--dimension);
     border: var(--small-border);
   }
-  .number{
+  .cell-input-empty {
+    color: var(--clr-primary-light);
+  }
+  .cell-input-empty,
+  .cell-input-full {
+    font-size: var(--fs-600);
     width: 100%;
     height: 100%;
     border: none;
     text-align: center;
-    background-color: transparent;
   }
-  .number:focus{
+  .cell-input-empty:focus,
+  .cell-input-full:focus {
     outline: none;
     border: none;
+  }
+  .cell-input-empty.active {
+    background-color: hsl(263, 33%, 38%);
+    color: var(--clr-light);
+  }
+  .cell-input-empty.active-cross {
+    color: var(--clr-light);
+  }
+  .cell-input-empty.active-cross,
+  .cell-input-full.active-cross {
+    background-color: var(--clr-primary-light);
   }
 
   .cell:nth-last-of-type(3n) {
@@ -167,11 +183,4 @@ position: relative;
   .row:nth-of-type(3n) {
     border-bottom: var(--large-border);
   }
-  .active-low {
-    background-color: hsl(225, 40%, 57%);
-  }
-}
-
-.cell.active {
-  background-color: hsl(225, 73%, 57%);
 }
