@@ -18,7 +18,7 @@
                 for ($j = 0; $j < 9; $j++) {
                     echo "<td class='cell'>";
                     if ($solution ?? $puzzle[$i][$j] === 0)
-                        echo "<input id='i{$i}{$j}' data-row={$i} data-col={$j} class='cell-input-empty' maxlength=1 size=1 autocomplete=off onkeypress='return onlyNumber(e)' />";
+                        echo "<input id='i{$i}{$j}' data-row={$i} data-col={$j} class='cell-input-empty' maxlength=1 size=1 autocomplete=off onkeypress='return onlyNumber(event)' />";
                     else
                         echo "<input id='i{$i}{$j}' data-row={$i} data-col={$j} class='cell-input-full' value={$puzzle[$i][$j]} maxlength=1 size=1 autocomplete=off readonly />";
                     echo "</td>";
@@ -27,8 +27,8 @@
             }
             ?>
         </table>
-        <button id="show-solution">Show Solution</button>
-        <a href="/board">Play again</a>
+        <button id="show-solution"><a href="/board?game=solution">Show solution</a></button>
+        <button id="show-solution"><a href="/board">Play Again</a></button>
     </section>
 </body>
 

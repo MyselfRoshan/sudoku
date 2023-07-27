@@ -17,6 +17,7 @@ emptyCellInputs.forEach((emptyCellInput) => {
         ? activeCrossInput.classList.toggle("active-cross")
         : null;
     });
+    emptyCellInput.classList.remove("active-cross");
     emptyCellInput.classList.toggle("active");
   });
 });
