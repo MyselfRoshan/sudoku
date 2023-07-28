@@ -15,10 +15,7 @@ class Database
     public function __construct()
     {
         try {
-            $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME;
-            $dsn = "mysql:host=172.23.0.5;dbname=sudoku_db";
-            // $dsn = "mysql:host=172.23.0.5;port=9906;dbname=sudoku_db";
-            // dd($dsn);
+            $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
             $options =
                 [
                     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -26,97 +23,94 @@ class Database
                 ];
 
             $this->con = new PDO($dsn, DB_USERNAME, DB_PASSWORD, $options);
-            // dd(new PDO($dsn, DB_USERNAME, DB_PASSWORD, $options));
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage());
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 
     /**
      * Method to select row/s from database
      */
-    static public function select($query = "", $params = [])
+    public static function select($query = "", $params = [])
     {
         try {
-            $stmt = Database::prepareBindAndExecute($query, $params);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmt = null;
-
-            return $result;
+            $statement = self::prepareBindAndExecute($query, $params);
+            return $statement;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), (int)$e->getCode());
         }
     }
     /**
      * Method to insert a new row in database
      */
-    static public function insert($query = "", $params = [])
+    public static function insert($query = "", $params = [])
     {
         try {
-            $stmt = Database::prepareBindAndExecute($query, $params);
-            $result = $stmt->rowCount();
-            $stmt = null;
+            $statement = self::prepareBindAndExecute($query, $params);
+            $result = $statement->rowCount();
+            $statement = null;
 
             return $result;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), (int)$e->getCode());
         }
     }
 
     /**
      * Method to update a row in database
      */
-    static public function update($query = "", $params = [])
+    public static function update($query = "", $params = [])
     {
         try {
-            $stmt = Database::prepareBindAndExecute($query, $params);
-            // $result = $stmt->rowCount();
-            $stmt = null;
+            $statement = self::prepareBindAndExecute($query, $params);
+            $result = $statement->rowCount();
+            $statement = null;
 
-            return true;
+            return $result;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), (int)$e->getCode());
         }
     }
 
     /**
      * Method to delete a row from database
      */
-    static public function delete($query = "", $params = [])
+    public static function delete($query = "", $params = [])
     {
         try {
-            $stmt = Database::prepareBindAndExecute($query, $params);
-            $result = $stmt->rowCount();
-            $stmt = null;
+            $statement = self::prepareBindAndExecute($query, $params);
+            $result = $statement->rowCount();
+            $statement = null;
 
             return $result;
         } catch (Exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), (int)$e->getCode());
         }
     }
 
     /**
      * Method to prepare, bind and execute the query
      */
-    private function prepareBindAndExecute($query = "", $params = [])
+    private static function prepareBindAndExecute($query = "", $params = [])
     {
         try {
-            $stmt = $this->con->prepare($query);
-
-            if ($stmt === false) {
+            // creating an instance of a class as cannot call non static property in static function
+            $statement = (new self)->con->prepare($query);
+            if ($statement === false) {
                 throw new PDOException("Unable to prepare the statement.");
             }
 
+            // $params = [VARIABLE_NAME => [VARIABLE_VALUE, VARIBLE_TYPE]];
             if (count($params) > 0) {
-                foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $value[0], $value[1]);
+                foreach ($params as $param => $values) {
+                    $statement->bindParam($param, $values[0], $values[1]);
                 }
             }
 
-            $stmt->execute();
-            return $stmt;
+            $statement->execute();
+            return $statement;
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage());
+            throw new PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 }
