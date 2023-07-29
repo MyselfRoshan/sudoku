@@ -24,14 +24,18 @@ elseif (!Validate::password($password))
 // If $alerts is found redirect to same page else redirect to login page
 if (!empty($alerts)) {
     require_view('signup.view.php', [
-        'alerts' => $alerts
+        'alerts' => $alerts,
+        'scripts' => [
+            '/resources/js/ajaxRedirect.js',
+        ]
     ]);
 } else {
     $query = "INSERT users(username,email,password) VALUES(:username,:email,:password)";
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
     $params = [
         'username' => [$username, PDO::PARAM_STR],
         'email' => [$email, PDO::PARAM_STR],
-        'password' => [$password, PDO::PARAM_STR]
+        'password' => [$hashedPassword, PDO::PARAM_STR]
     ];
     Database::insert($query, $params);
     header('location: /login');

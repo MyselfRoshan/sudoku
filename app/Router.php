@@ -2,39 +2,50 @@
 
 namespace App;
 
+use App\Http\Middleware\Middleware;
+
 class Router
 {
     private $routes = [];
 
     private function add($uri, $controller, $method)
     {
-        // $this->routes = [
-        //     'uri' => $uri,
-        //     'controller' => $controller,
-        //     'method' => $method
-        // ];
-        $this->routes[] = compact('uri', 'controller', 'method');
+        $this->routes[] = [
+            'uri' => $uri,
+            'controller' => $controller,
+            'method' => $method,
+            'middleware' => null
+        ];
+        // $this->routes[] = compact('uri', 'controller', 'method', 'middleware');
+        return $this;
     }
     public function get($uri, $controller)
     {
-        $this->add($uri, $controller, 'GET');
+        return $this->add($uri, $controller, 'GET');
     }
     public function post($uri, $controller)
     {
-        $this->add($uri, $controller, 'POST');
+        return $this->add($uri, $controller, 'POST');
     }
     public function delete($uri, $controller)
     {
-        $this->add($uri, $controller, 'DELETE');
+        return $this->add($uri, $controller, 'DELETE');
     }
 
     public function route($uri, $method)
     {
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $uri && $route['method'] === strtoupper($method))
+            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+                Middleware::resolve($route['middleware']);
                 return require base_path($route['controller']);
+            }
         }
         $this->abort();
+    }
+    public function only($value)
+    {
+        $this->routes[array_key_last($this->routes)]['middleware'] = $value;
+        return $this;
     }
 
     protected function abort($code = 404)

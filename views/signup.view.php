@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<title>Slide Navbar</title>
-	<link rel="stylesheet" type="text/css" href="/resources/css/main.css">
-	<script defer src="/resources/js/ajaxRedirect.js"></script>
-</head>
+<?php require_view("partials/head.php", ['scripts' => $scripts]) ?>
 
 <body>
 	<section class="sign-in-up">

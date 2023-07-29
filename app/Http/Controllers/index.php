@@ -1,3 +1,7 @@
 <?php
-echo "this is home page";
-require_view("index.view.php");
+
+require_view("index.view.php", [
+    // 'scripts' => [
+    //     '/resources/js/ajaxRedirect.js',
+    // ]
+]);

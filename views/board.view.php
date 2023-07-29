@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>Slide Navbar</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/main.css">
-    <script defer src="/resources/js/board.js"></script>
-    </script>
-</head>
+<?php require_view("partials/head.php", ['scripts' => $scripts]) ?>
 
 <body>
+    <?php require_view("/partials/header.php") ?>
     <section class="sudoku-board-wrapper">
-        <h2>Difficulty: <?= $difficulty ?></h2>
+        <div>
+            <span class="welcome-text">
+                Welcome
+                <span>
+                    <?= $_SESSION['user']['username'] ?>
+                </span>
+            </span>
+            <span class="difficulty-text">
+                <span>Difficulty:</span>
+                <?= $difficulty ?>
+            </span>
+        </div>
         <table class="sudoku-board">
             <?php
             for ($i = 0; $i < 9; $i++) {
@@ -27,8 +34,14 @@
             }
             ?>
         </table>
-        <button id="show-solution"><a href="/board?game=solution">Show solution</a></button>
-        <button id="show-solution"><a href="/board">Play Again</a></button>
+        <div class="buttons">
+            <button class="btn-outline">
+                <a href="/board?solution=true">Show solution</a>
+            </button>
+            <button class="btn" id="show-solution">
+                <a href="/board">Play Again</a>
+            </button>
+        </div>
     </section>
 </body>
 

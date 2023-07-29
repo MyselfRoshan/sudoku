@@ -16,11 +16,14 @@ $puzzle = $responseArray["newboard"]["grids"][0]["value"];
 $difficulty = $responseArray["newboard"]["grids"][0]["difficulty"];
 $solution = $responseArray["newboard"]["grids"][0]["solution"];
 
-if (isset($_GET["game"]))
-    $_GET["game"] === "solution" ? $puzzle = $solution : abort();
+if (isset($_GET["solution"]))
+    $_GET["solution"] === "true" ? $puzzle = $solution : abort();
 
-echo "<p>{$response}</p>";
+
 require_view('board.view.php', [
     'puzzle' => $puzzle,
     'difficulty' => $difficulty,
+    'scripts' => [
+        '/resources/js/board.js',
+    ]
 ]);
